@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tech BLOG</title>
+
     <link rel="stylesheet" href="/css/jass.css" />
     <link rel="stylesheet" href="/css/style.css" />
+
   </head>
 
   <body class="bg-info">
@@ -16,8 +18,7 @@
         <h1>
           <a href="/">TECH BLOGGERS!</a>
         </h1>
-        <nav> 
-          <!-- Conditionally render login or logout links -->
+        <nav>
           <a href="/">Home </a>
           <a href="/dashboard">Dashboard</a>
           {{#if logged_in}}
@@ -30,16 +31,18 @@
       <main class="container container-fluid mt-5">
         <!-- Render the sub layout -->
         {{{body}}}
+
       </main>
+
       <footer>
 
       </footer>
     </div>
 
-    <!-- Render script for logged in users only -->
     {{#if logged_in}}
       <script src="/js/logout.js"></script>
     {{/if}}
+ 
   </body>
 
 </html>
