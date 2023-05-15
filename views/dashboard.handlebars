@@ -1,0 +1,47 @@
+<div class="text-dark text-right">
+  <h2 >Welcome, {{name}}!</h2>
+</div> 
+
+
+<div class="d-flex justify-content-center">
+  <div class="col-md-10">
+    <h3>Write a new post!:</h3>
+
+    <form class="form new-blogpost-form">
+      <div class="form-group">
+        <label for="blogpost-name">Blog Name:</label>
+        <input class="form-input" type="text" id="blogpost-name" name="blogpost-name" />
+      </div> 
+      <div class="form-group">
+        <label for="blogpost-desc">Description:</label>
+        <textarea class="form-input" id="blogpost-desc" name="blogpost-desc"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Post</button>
+      </div>
+    </form>
+      {{#if blogposts.length}}
+  <div class="col-md-10 blogpost-list">
+    <h3>Current Blogposts:</h3>
+
+    {{#each blogposts as |blogpost|}}
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <h4><a href="/blogpost/{{blogpost.id}}">{{blogpost.name}}</a></h4>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-sm btn-danger" data-id="{{blogpost.id}}">DELETE</button>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+  </div>
+
+ 
+</div>
+
+ 
+
+
+<script src="./js/dashboard.js"></script>
