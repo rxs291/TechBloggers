@@ -22,6 +22,12 @@ User.hasMany(Comment, {
   onDelete: 'CASCADE'
 })
 
-// Comment.has()
+Comment.hasOne(User,{
+  foreignKey: 'user_id',
+})
 
-module.exports = { User, Blogpost };
+Comment.hasOne(Blogpost,{
+  foreignKey: 'blogpost_id'
+})
+ 
+module.exports = { User, Blogpost, Comment };

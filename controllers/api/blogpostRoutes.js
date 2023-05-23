@@ -1,38 +1,58 @@
 const router = require('express').Router();
-const { Blogpost } = require('../../models');
-const withAuth = require('../../utils/auth');
+const { User, Blogpost, Comment } = require('../../models');
+const withAuth = require('../../utils/auth'); 
+
 
 router.post('/', withAuth, async (req, res) => {
+
+
+
+  const loggedUserData = await User.findByPk(req.session.user_id);
+  const loggedUser = loggedUserData.get({plain: true});
+
+  console.log(loggedUser)
+
+  console.log(req.body)
+
   try {
-    const newBlogpost = await Blogpost.create({
-      ...req.body,
+    const newComment = await Comment.create({
+      
+      description: req.body.comment ,
+      name: loggedUser.name,
+      blogpost_id: req.body.blogpostID,
       user_id: req.session.user_id,
+      
     });
 
-    res.status(200).json(newBlogpost);
+    res.status(200).json(newComment);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.delete('/:id', withAuth, async (req, res) => {
+
+
+router.put('/:id', withAuth, async (req, res) => {
+
+  
+  console.log(req.body)
+ 
+
   try {
-    const blogpostData = await Blogpost.destroy({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
-    });
+  Blogpost.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  });
 
-    if (!blogpostData) {
-      res.status(404).json({ message: 'No project found with this id!' });
-      return;
-    }
-
-    res.status(200).json(blogpostData);
+    res.status(200);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(400).json(err);
   }
 });
+
+
+
+
 
 module.exports = router;

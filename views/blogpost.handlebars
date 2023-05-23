@@ -1,18 +1,63 @@
 {{#if logged_in}}
- <div class="text-dark text-right">
-  <h2 >Welcome, {{loggedUser}}!</h2>
-</div>
+  <div class="text-dark text-right">
+    <h2>Welcome, {{loggedUser}}!</h2>
+  </div>
 {{/if}}
 
+
 <div class="text-center">
+{{#if myBlog}}
+    <form class="form update-blogpost-form">
+      <div class="form-group">
+        <label for="blogpost-name">Update Blog Name:</label> 
+        <textarea class="form-input" id="blogpost-name" name="blogpost-name">{{name}}</textarea>
+      </div> 
+      <div class="form-group">
+        <label for="blogpost-desc">Update Description:</label>
+        <textarea class="form-input" id="blogpost-desc" name="blogpost-desc">{{description}}</textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+{{else}}
+ 
+  <div>
   <h2>{{name}}</h2>
   <p>{{description}}</p>
   <p>Created by {{user.name}} on {{format_date date_created}}</p>
-  <p>
-    <button class="btn btn-primary">Leave a Comment!</button>
-  </p>
-</div>
+  </div>
+  {{/if}}
 
+  <div>
+    <div class = "flex-column flex-no-wrap align-center">  
+      {{#if comments.length}}
+      {{#each comments as |comment|}} 
+        <div class="row mb-2 comment-container">
+          <div class="col-md-8">
+            <p>{{comment.description}}</p>
+          </div>
+          <div class="col-md-4 align-content-end">
+            <p>{{comment.name}} on {{format_date comment.date_created}}</p>
+          </div>
+        </div> 
+      {{/each}}
+      {{/if}} 
+    </div>
+  </div>
+  <div>
+    <form class="form comment-form"> 
+      <div class="form-group">
+        <label for="comment-desc" data-id= "{{id}}" >Any Thoughts?:</label>
+        <textarea class="form-input" id="comment-desc" name="comment-desc"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Comment</button>
+      </div>
+      <div class="display-none">
+        <p id="blogpost-id">{{id}}</p>
+      </div>
+    </form>
+  </div>
 
- 
- 
+<script src="/js/blogpost.js"></script>

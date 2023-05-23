@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Blogpost, User } = require("../models");
+const { Blogpost, User, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
 router.get("/", async (req, res) => {
@@ -65,16 +65,31 @@ router.get("/blogpost/:id", withAuth, async (req, res) => {
           model: User,
           attributes: ["name"],
         },
+        {
+          model: Comment,
+          attributes: ["description", "date_created", "user_id","name"]
+        },
       ],
     });
 
-    const blogpost = blogpostData.get({ plain: true });
-    console.log(blogpost)
-    console.log(req.session)
+    const loggedUserData = await User.findByPk(req.session.user_id);
+    const loggedUser = loggedUserData.get({plain: true});
+
+    
+     
+
+    const blogpost = blogpostData.get({ plain: true }); 
+
+    console.log(blogpost.user_id) 
+    console.log(loggedUser.id)
+
+    //this allows for the owner of the blog to update their own post IF the logged user ID equals the BLOGPOST USER ID
+    let myblog = loggedUser.id == blogpost.user_id; 
 
     res.render("blogpost", {
       ...blogpost,
-      loggedUser: req.session.name,
+      loggedUser: loggedUser.name,
+      myBlog: myblog,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
