@@ -10,16 +10,20 @@
     <form class="form update-blogpost-form">
       <div class="form-group">
         <label for="blogpost-name">Update Blog Name:</label> 
-        <textarea class="form-input" id="blogpost-name" name="blogpost-name">{{name}}</textarea>
+        <textarea class="form-input bg-primary text-white" id="blogpost-name" name="blogpost-name">{{name}}</textarea>
       </div> 
       <div class="form-group">
         <label for="blogpost-desc">Update Description:</label>
-        <textarea class="form-input" id="blogpost-desc" name="blogpost-desc">{{description}}</textarea>
+        <textarea  class="form-input bg-primary text-white" id="blogpost-desc" name="blogpost-desc">{{description}}</textarea>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Update</button>
       </div>
     </form>
+
+    <br>
+    <br>
+    <p>active comments on your post</p>
 {{else}}
  
   <div>
@@ -32,15 +36,11 @@
   <div>
     <div class = "flex-column flex-no-wrap align-center">  
       {{#if comments.length}}
-      {{#each comments as |comment|}} 
-        <div class="row mb-2 comment-container">
-          <div class="col-md-8">
+      {{#each comments as |comment|}}  
+          <div class="align-start flex-column comment-container"> 
             <p>{{comment.description}}</p>
-          </div>
-          <div class="col-md-4 align-content-end">
-            <p>{{comment.name}} on {{format_date comment.date_created}}</p>
-          </div>
-        </div> 
+            <p>- {{comment.name}} on {{format_date comment.date_created}}</p>
+          </div>  
       {{/each}}
       {{/if}} 
     </div>

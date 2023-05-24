@@ -24,7 +24,10 @@
 }
 
 .comment-container{
-  border: thick solid black;
-  border-radius: 10px; 
+  border: .2rem  solid #2d3e50;
+  border-top: 2rem solid #2d3e50 ;
+  border-radius: 2px; 
   width: 75%;
+  padding: 1rem;
+  margin-bottom: .5rem;
 }
